@@ -5,20 +5,26 @@ class Recipe
 		@ingredients = []
 	end
 
-	def add_ingredient (current_ingredient, current_amount = "to taste", current_unit = "--")
-		@ingredients << {amount: current_amount, unit: current_unit, ingredient: current_ingredient}
+	def add_ingredient (ingredient)
+		@ingredients << ingredient
 	end
 end
 
-class RecipeList
-	def initialize
-		@recipelist = []
-	end
-
-	def add(recipe)
-		@recipelist << recipe
+class Ingredient
+	def initialize (current_ingredient)
+		@ingredient = current_ingredient
 	end
 end
+
+# class RecipeList
+# 	def initialize
+# 		@recipelist = []
+# 	end
+
+# 	def add(recipe)
+# 		@recipelist << recipe
+# 	end
+# end
 
 
 
