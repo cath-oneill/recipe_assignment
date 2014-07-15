@@ -9,11 +9,13 @@ recipe_array.each_with_index do |recipe, i|
 	current_recipe = Recipe.new(recipe[0], recipe[1].split.last.to_i)
 	n = 2
 	while n < recipe.size
-		if recipe[n].start_with?("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-			current_ingredient = Ingredient.new(recipe[n].split.first.to_i, recipe[n].slice!(2..-1))
-		else
-			current_ingredient = Ingredient.new(recipe[n])
+		array_of_recipe_words = recipe[n].split
+		current_qty = "--" #default value
+		if array_of_recipe_words[0].match(/\d+/)
+			current_qty = array_of_recipe_words[0].match(/\d+/).to_a[0].to_i
+			array_of_recipe_words.shift
 		end
+		current_ingredient = Ingredient.new(current_qty, array_of_recipe_words.join(" "))
 		n += 1		
 		current_recipe.add_ingredient(current_ingredient)
 	end

@@ -11,7 +11,7 @@ class Recipe
 end
 
 class Ingredient
-	def initialize (quantity = "--", ingredient)
+	def initialize (quantity, ingredient)
 		@quantity = quantity
 		@ingredient = ingredient
 	end
