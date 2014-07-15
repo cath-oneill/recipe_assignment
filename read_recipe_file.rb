@@ -5,17 +5,26 @@ recipe_array = text.collect do |x|
 	x.split("\n")
 end
 
-recipe_array.each_with_index do |recipe, i|
+recipe_array.each do |recipe|
 	current_recipe = Recipe.new(recipe[0], recipe[1].split.last.to_i)
 	n = 2
 	while n < recipe.size
-		array_of_recipe_words = recipe[n].split
+		ingredients_split = recipe[n].split
 		current_qty = "--" #default value
-		if array_of_recipe_words[0].match(/\d+/)
-			current_qty = array_of_recipe_words[0].match(/\d+/).to_a[0].to_i
-			array_of_recipe_words.shift
+		current_unit = "--"
+		
+		if ingredients_split[0].match(/\d+/)
+			current_qty = ingredients_split[0].match(/\d+/).to_a[0].to_i
+			ingredients_split.shift
 		end
-		current_ingredient = Ingredient.new(current_qty, array_of_recipe_words.join(" "))
+
+		array_of_units = ["oz", "tbs", "lbs", "cup", "cups"]
+		if array_of_units.include?(ingredients_split[0])
+			current_unit = ingredients_split[0]
+			ingredients_split.shift
+		end
+		
+		current_ingredient = Ingredient.new(current_qty, current_unit, ingredients_split.join(" "))
 		n += 1		
 		current_recipe.add_ingredient(current_ingredient)
 	end
