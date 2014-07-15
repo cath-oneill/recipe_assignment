@@ -12,6 +12,7 @@ recipe_array.each do |recipe|
 		ingredients_split = recipe[n].split
 		current_qty = "--" #default value
 		current_unit = "--"
+		current_prep = "--"
 		
 		if ingredients_split[0].match(/\d+/)
 			current_qty = ingredients_split[0].match(/\d+/).to_a[0].to_i
@@ -24,11 +25,20 @@ recipe_array.each do |recipe|
 			ingredients_split.shift
 		end
 		
-		current_ingredient = Ingredient.new(current_qty, current_unit, ingredients_split.join(" "))
-		n += 1		
+		i = ingredients_split.find_index { |x| x.end_with?(",")}
+		if i != nil
+			x = ingredients_split.take(i+1)
+			ingredients_split.shift(i+1)
+			current_prep = ingredients_split.join(" ")
+			ingredients_split = x
+			ingredients_split[-1] = ingredients_split.last.chop
+		end
+
+		current_ingredient = Ingredient.new(current_qty, current_unit, ingredients_split.join(" "), current_prep)
 		current_recipe.add_ingredient(current_ingredient)
+		n += 1		
+
 	end
 	p current_recipe
 end
 
-# ObjectSpace.each_object(Recipe) {|x| p x}

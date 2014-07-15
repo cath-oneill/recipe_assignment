@@ -11,10 +11,11 @@ class Recipe
 end
 
 class Ingredient
-	def initialize (quantity, units, ingredient)
+	def initialize (quantity, units, ingredient, prep_instructions)
 		@quantity = quantity
 		@units = units
 		@ingredient = ingredient
+		@prep_instructions = prep_instructions
 	end
 end
 
